@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="PontCSharp.Tests/PontCSharp.Tests.csproj" Id="40985750-0436-4ed1-907d-28b3cfa29224" />
+  <Project Path="PontCSharp/PontCSharp.csproj" />
+</Solution>
