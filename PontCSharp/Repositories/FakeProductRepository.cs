@@ -5,13 +5,18 @@ namespace PontCSharp.Repositories
 {
     public class FakeProductRepository : IProductRepository
     {
-
+        private int _nextId;
         private readonly List<Product> _products = new()
         {
             new Product{Id=1,Name="Clavier",Price=15.00m},
             new Product{Id=2,Name="PC",     Price=200.00m},
             new Product{Id=3,Name="souris", Price=10.00m}
         };
+
+        public FakeProductRepository()
+        {
+            _nextId = _products.Max(p => p.Id) +1;
+        }
 
         Product? IProductRepository.GetProductById(int id)
         {
@@ -25,15 +30,10 @@ namespace PontCSharp.Repositories
 
         Product IProductRepository.AddProduct(Product newProduct)
         {
-            if(_products.Count == 0) {
-                newProduct.Id = 1;
-            }
-            else
-            {
-                int idMax = _products.Max(p => p.Id);
-                newProduct.Id = idMax + 1;
-            }
+                newProduct.Id = _nextId;
+            
             _products.Add(newProduct);
+            _nextId++;
             return newProduct;
         }
 

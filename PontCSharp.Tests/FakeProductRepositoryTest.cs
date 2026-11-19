@@ -107,5 +107,23 @@ namespace PontCSharp.Tests
             Assert.False(checkUnknown);
 
         }
+
+        [Fact]
+        public void AddProduct_AfterDeletingLastProduct_DoesNotReuseId()
+        {
+            IProductRepository repository = new FakeProductRepository();
+
+            Product prodTest = new() { Name = "Phone case", Price = 5.00m };
+
+            repository.DeleteProduct(3);
+
+            var resultatAddProduct = repository.AddProduct(prodTest);
+
+            Assert.NotEqual(3, resultatAddProduct.Id);
+
+
+        }
+
+
     }
 }
