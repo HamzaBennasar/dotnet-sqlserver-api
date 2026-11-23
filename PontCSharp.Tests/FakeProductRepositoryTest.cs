@@ -6,22 +6,22 @@ namespace PontCSharp.Tests
     public class FakeProductRepositoryTest
     {
         [Fact]
-        public void GetAllProduct_DefaultData_ReturnThreeProducts()
+        public async Task GetAllProduct_DefaultData_ReturnThreeProducts()
         {
             IProductRepository repository = new FakeProductRepository();
 
-            var numberOfProducts = repository.GetAllProducts();
+            var numberOfProducts = await repository.GetAllProductsAsync();
 
             Assert.Equal(3, numberOfProducts.Count());
 
         }
 
         [Fact]
-        public void GetProductById_ExistingId_ReturnProduct()
+        public async Task GetProductById_ExistingId_ReturnProduct()
         {
             IProductRepository repository = new FakeProductRepository();
 
-            var nameOfProduct = repository.GetProductById(2);
+            var nameOfProduct = await repository.GetProductByIdAsync(2);
 
             Assert.NotNull(nameOfProduct);
 
@@ -30,39 +30,39 @@ namespace PontCSharp.Tests
         }
 
         [Fact]
-        public void GetProductById_UnknownId_ReturnNull()
+        public async Task GetProductById_UnknownId_ReturnNull()
         {
             IProductRepository repository = new FakeProductRepository();
 
-            var productIdNull = repository.GetProductById(999);
+            var productIdNull = await repository.GetProductByIdAsync(999);
 
             Assert.Null(productIdNull);
 
         }
 
         [Fact]
-        public void AddProduct_NewProduct_GetsNextId()
+        public async Task AddProduct_NewProduct_GetsNextId()
         {
             IProductRepository repository = new FakeProductRepository();
 
             Product prodTest = new() { Name = "Test", Price = 0.00m };
 
-            var newProduct = repository.AddProduct(prodTest);
+            var newProduct = await repository.AddProductAsync(prodTest);
 
             Assert.Equal(4, newProduct.Id);
 
         }
 
         [Fact]
-        public void UpdateProduct_UpdateExistingProduct_returnTrue()
+        public async Task UpdateProduct_UpdateExistingProduct_returnTrue()
         {
             IProductRepository repository = new FakeProductRepository();
 
             Product productUpdate = new() { Id = 1, Name = "Clavier gaming", Price = 30.00m };
 
-            var productUpdateisTrue = repository.UpdateProduct(productUpdate);
+            var productUpdateisTrue = await repository.UpdateProductAsync(productUpdate);
 
-            var productToUpdate = repository.GetProductById(1);
+            var productToUpdate = await repository.GetProductByIdAsync(1);
 
             Assert.True(productUpdateisTrue);
 
@@ -72,25 +72,25 @@ namespace PontCSharp.Tests
         }
 
         [Fact]
-        public void UpdateProduct_UpdateUnknownProduct_returnFalse()
+        public async Task UpdateProduct_UpdateUnknownProduct_returnFalse()
         {
             IProductRepository repository = new FakeProductRepository();
 
             Product productUpdate = new() { Id = 999, Name = "Clavier gaming", Price = 30.00m };
 
-            var checkUnknown = repository.UpdateProduct(productUpdate);
+            var checkUnknown = await repository.UpdateProductAsync(productUpdate);
 
             Assert.False(checkUnknown);
         }
 
         [Fact]
-        public void DeleteProduct_DeleteExistingProduct_returnTrue()
+        public async Task DeleteProduct_DeleteExistingProduct_returnTrue()
         {
             IProductRepository repository = new FakeProductRepository();
 
-            var productToDelete = repository.DeleteProduct(3);
+            var productToDelete = await repository.DeleteProductAsync(3);
 
-            var productNotNull = repository.GetProductById(3);
+            var productNotNull = await repository.GetProductByIdAsync(3);
 
             Assert.True(productToDelete);
 
@@ -98,26 +98,26 @@ namespace PontCSharp.Tests
         }
 
         [Fact]
-        public void DeleteProduct_DeleteUnknownProduct_returnFalse()
+        public async Task DeleteProduct_DeleteUnknownProduct_returnFalse()
         {
             IProductRepository repository = new FakeProductRepository();
 
-            var checkUnknown = repository.DeleteProduct(999);
+            var checkUnknown = await repository.DeleteProductAsync(999);
 
             Assert.False(checkUnknown);
 
         }
 
         [Fact]
-        public void AddProduct_AfterDeletingLastProduct_DoesNotReuseId()
+        public async Task AddProduct_AfterDeletingLastProduct_DoesNotReuseId()
         {
             IProductRepository repository = new FakeProductRepository();
 
             Product prodTest = new() { Name = "Phone case", Price = 5.00m };
 
-            repository.DeleteProduct(3);
+            await repository.DeleteProductAsync(3);
 
-            var resultatAddProduct = repository.AddProduct(prodTest);
+            var resultatAddProduct = await repository.AddProductAsync(prodTest);
 
             Assert.NotEqual(3, resultatAddProduct.Id);
 

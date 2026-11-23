@@ -15,18 +15,18 @@ catch (ArgumentException ex)
     productRepository = ProductRepoFactory.CreateProductRepository(RepositoryType.Fake);  
 }
 
-foreach (var p in productRepository.GetAllProducts())
+foreach (var p in await productRepository.GetAllProductsAsync())
 {
     Console.WriteLine(p);
 }
 
-var product = productRepository.GetProductById(2) ?? throw new InvalidOperationException("Product ID : 2");
+var product = await productRepository.GetProductByIdAsync(2) ?? throw new InvalidOperationException("Product ID : 2");
 
 Console.WriteLine(product.Name);
 
 try
 {
-    var productRecherche = productRepository.GetProductById(999) ?? throw new InvalidOperationException("Product ID 999 introuvable");
+    var productRecherche = await productRepository.GetProductByIdAsync(999) ?? throw new InvalidOperationException("Product ID 999 introuvable");
     Console.WriteLine(productRecherche.Name);
 }
 catch (InvalidOperationException ex)
@@ -38,11 +38,11 @@ catch (InvalidOperationException ex)
 
 Product prod = new() { Name = "Casque", Price = 70.00m };
 
-Product prodRenvoie = productRepository.AddProduct(prod);
+Product prodRenvoie = await productRepository.AddProductAsync(prod);
 
 Console.WriteLine(prodRenvoie);
 
-foreach (var p in productRepository.GetAllProducts())
+foreach (var p in await productRepository.GetAllProductsAsync())
 {
     Console.WriteLine(p);
 }
@@ -52,21 +52,21 @@ Console.WriteLine("Dernier exercice de C3 : le scénario CRUD");
 Product casqueAmelioree = new() { Id = 2, Name = "CasqueAmelioree", Price = 90.00m };
 
 
-Console.WriteLine($"Update 2:{productRepository.UpdateProduct(casqueAmelioree)}");
+Console.WriteLine($"Update 2:{await productRepository.UpdateProductAsync(casqueAmelioree)}");
 
-Console.WriteLine($"Display product 2:{productRepository.GetProductById(2)}");
+Console.WriteLine($"Display product 2:{await productRepository.GetProductByIdAsync(2)}");
 
-Console.WriteLine($"Test update id 999: {productRepository.UpdateProduct(new() { Id = 999, Name = "Rien", Price = 100.00m })}");
+Console.WriteLine($"Test update id 999: {await productRepository.UpdateProductAsync(new() { Id = 999, Name = "Rien", Price = 100.00m })}");
 
-Console.WriteLine($"Delete id 3 : {productRepository.DeleteProduct(3)}");
+Console.WriteLine($"Delete id 3 : {await productRepository.DeleteProductAsync(3)}");
 
-Console.WriteLine($"Test delete id 999: {productRepository.DeleteProduct(999)}");
+Console.WriteLine($"Test delete id 999: {await productRepository.DeleteProductAsync(999)}");
 
-Console.WriteLine($"Ajout Cable: {productRepository.AddProduct(new() { Name = "Cable", Price = 5.00m })}");
+Console.WriteLine($"Ajout Cable: {await productRepository.AddProductAsync(new() { Name = "Cable", Price = 5.00m })}");
 
 Console.WriteLine("Products list");
 
-foreach (var p in productRepository.GetAllProducts())
+foreach (var p in await productRepository.GetAllProductsAsync())
 {
     Console.WriteLine(p);
 }

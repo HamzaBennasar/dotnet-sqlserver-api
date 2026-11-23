@@ -18,53 +18,53 @@ namespace PontCSharp.Repositories
             _nextId = _products.Max(p => p.Id) +1;
         }
 
-        Product? IProductRepository.GetProductById(int id)
+        Task<Product?> IProductRepository.GetProductByIdAsync(int id)
         {
-            return _products.Find(p => p.Id == id);
+            return Task.FromResult(_products.Find(p => p.Id == id));
         }
 
-        IEnumerable<Product> IProductRepository.GetAllProducts()
+        Task<IEnumerable<Product>> IProductRepository.GetAllProductsAsync()
         {
-            return _products;
+            return Task.FromResult<IEnumerable<Product>>(_products);
         }
 
-        Product IProductRepository.AddProduct(Product newProduct)
+        Task<Product> IProductRepository.AddProductAsync(Product newProduct)
         {
                 newProduct.Id = _nextId;
             
             _products.Add(newProduct);
             _nextId++;
-            return newProduct;
+            return Task.FromResult(newProduct);
         }
 
-        bool IProductRepository.UpdateProduct(Product newProduct)
+        Task<bool> IProductRepository.UpdateProductAsync(Product newProduct)
         {
             var productRecherchee = _products.Find(p => p.Id == newProduct.Id);
 
             if (productRecherchee == null)
             {
-                return false;
+                return Task.FromResult(false);
             }
             else
             {
                 productRecherchee.Name = newProduct.Name;
                 productRecherchee.Price = newProduct.Price;
-                return true;
+                return Task.FromResult(true);
             }
         }
 
-        bool IProductRepository.DeleteProduct(int id)
+        Task<bool> IProductRepository.DeleteProductAsync(int id)
         {
             var productRecherchee = _products.Find(p => p.Id == id);
 
             if(productRecherchee == null)
             {
-                return false;
+                return Task.FromResult(false);
             }
             else
             {
                 _products.Remove(productRecherchee);
-                return true;
+                return Task.FromResult(true);
             }
         }
 

@@ -5,15 +5,15 @@ namespace PontCSharp.Repositories
 {
     public interface IProductRepository
     {
-        Product? GetProductById(int id);
+        Task<Product?> GetProductByIdAsync(int id);
 
-        IEnumerable<Product> GetAllProducts();
+        Task<IEnumerable<Product>> GetAllProductsAsync();
 
-        Product AddProduct(Product p);
+        Task<Product> AddProductAsync(Product p);
 
-        bool UpdateProduct(Product p);
+        Task<bool> UpdateProductAsync(Product p);
 
-        bool DeleteProduct(int id);
+        Task <bool> DeleteProductAsync(int id);
 
     }
 }

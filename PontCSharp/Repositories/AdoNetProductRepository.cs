@@ -18,27 +18,27 @@ namespace PontCSharp.Repositories
             _connectionString = connectionString;
         }
 
-        Product? IProductRepository.GetProductById(int id)
+        Task<Product?> IProductRepository.GetProductByIdAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        IEnumerable<Product> IProductRepository.GetAllProducts()
+        Task<IEnumerable<Product>> IProductRepository.GetAllProductsAsync()
         {
             throw new NotImplementedException();
         }
 
-        Product IProductRepository.AddProduct(Product p)
+        Task<Product> IProductRepository.AddProductAsync(Product p)
         {
             throw new NotImplementedException();
         }
 
-        bool IProductRepository.UpdateProduct(Product p)
+        Task<bool> IProductRepository.UpdateProductAsync(Product p)
         {
             throw new NotImplementedException();
         }
 
-        bool IProductRepository.DeleteProduct(int id)
+        Task<bool> IProductRepository.DeleteProductAsync(int id)
         {
             throw new NotImplementedException();
         }
